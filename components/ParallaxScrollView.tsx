@@ -1,5 +1,5 @@
 import type { PropsWithChildren, ReactElement } from 'react';
-import { StyleSheet } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import Animated, {
   interpolate,
   useAnimatedRef,
@@ -8,25 +8,35 @@ import Animated, {
 } from 'react-native-reanimated';
 
 import { ThemedView } from '@/components/ThemedView';
+import { ThemedText } from '@/components/ThemedText';
 import { useBottomTabOverflow } from '@/components/ui/TabBarBackground';
 import { useColorScheme } from '@/hooks/useColorScheme';
 
-const HEADER_HEIGHT = 250;
+import React from 'react';
+import { Ionicons } from '@expo/vector-icons'; // For icons
+import { useNavigation, DrawerActions } from '@react-navigation/native';
+
+const HEADER_HEIGHT = 50;
 
 type Props = PropsWithChildren<{
   headerImage: ReactElement;
   headerBackgroundColor: { dark: string; light: string };
+  headerText: string;
+  assets: ['./assets/fonts/'];
 }>;
 
 export default function ParallaxScrollView({
   children,
   headerImage,
   headerBackgroundColor,
+  headerText,
 }: Props) {
   const colorScheme = useColorScheme() ?? 'light';
   const scrollRef = useAnimatedRef<Animated.ScrollView>();
   const scrollOffset = useScrollViewOffset(scrollRef);
   const bottom = useBottomTabOverflow();
+  const navigation = useNavigation(); 
+
   const headerAnimatedStyle = useAnimatedStyle(() => {
     return {
       transform: [
@@ -57,7 +67,20 @@ export default function ParallaxScrollView({
             { backgroundColor: headerBackgroundColor[colorScheme] },
             headerAnimatedStyle,
           ]}>
+
+          <ThemedView style={styles.header_prop}>
+            <ThemedText type="title">{headerText}</ThemedText>
+          </ThemedView>
+          
           {headerImage}
+
+          <TouchableOpacity
+            style={styles.hamburger}
+            onPress={() => navigation.dispatch(DrawerActions.openDrawer())} // Open the menu
+          >
+            <Ionicons name="menu" size={28} color="#fff" />
+          </TouchableOpacity>
+
         </Animated.View>
         <ThemedView style={styles.content}>{children}</ThemedView>
       </Animated.ScrollView>
@@ -78,5 +101,19 @@ const styles = StyleSheet.create({
     padding: 32,
     gap: 16,
     overflow: 'hidden',
+  },
+  header_prop: {
+    left: 60,
+    height: 50,
+    width: 100,
+    bottom: -7,
+    position: 'absolute',
+    backgroundColor: '#d3c98b',
+    fontFamily: 'KleeOne-Regular',
+  },
+  hamburger: {
+    position: 'absolute',
+    right: 15,
+    top: 12,
   },
 });
