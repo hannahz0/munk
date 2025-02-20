@@ -1,8 +1,10 @@
 import { Text, View, StyleSheet } from 'react-native';
+import Header from '../components/Header'
 
 export default function profile() {
   return (
     <View style={styles.container}>
+      <Header />
       <Text style={styles.text}>Journal screen</Text>
     </View>
   );
