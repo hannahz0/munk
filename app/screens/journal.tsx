@@ -14,7 +14,7 @@ export default function profile() {
       />
     </View>
     
-  );
+  ); 
 }
 
 const styles = StyleSheet.create({
