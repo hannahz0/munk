@@ -4,6 +4,7 @@ import Header from './components/Header';
 import { Checkbox } from 'expo-checkbox';
 import React, {useState} from 'react';
 
+
 export default function Index() {
   const [isChecked1, setChecked1] = useState(false); ///
   const [isChecked2, setChecked2] = useState(false); ///
@@ -11,12 +12,6 @@ export default function Index() {
   return (
     <View style={styles.container}>
       <Header />
-      <View style = {styles.titlecontainer}>
-        <Text style={styles.text}>Welcome to Munk App!</Text>
-        {/* <br></br>  */}
-        <Link href="/screens/profile" style={styles.button}>Go to Profile screen</Link>
-      </View>
-
       <View style={styles.trackercontainer}>
         <View style={styles.checkboxContainer}>
           <View style={styles.checkboxContainer}>
@@ -73,7 +68,7 @@ const styles = StyleSheet.create({
   text: {
     color: '#a66d45',
     fontSize: 20,
-
+    fontFamily: 'GrechenFuemen-Regular'
   },
   button: {
     fontSize: 20,
@@ -92,6 +87,7 @@ const styles = StyleSheet.create({
     gap: 8,
     margin: 20,
     backgroundColor: '#f3ead6',
+    justifyContent: 'center',
   },
   journalcontainer: {
     gap: 8,
